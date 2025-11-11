@@ -405,7 +405,7 @@ async function main() {
 
     displayTitle('SELAMAT DATANG DI SISTEM MANAJEMEN NILAI SISWA');
 
-    await showLoadingAnimation('Memuat data siswa...', 500);
+    await showLoadingAnimation('Memuat data siswa...', 1000);
 
     loadData(); 
     

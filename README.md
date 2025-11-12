@@ -1,96 +1,47 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/mN9h8nSd)
-# Challenge 4: Sistem Manajemen Nilai Siswa
+# Sistem Manajemen Nilai Siswa
 
-## Deskripsi
-Buatlah aplikasi CLI (Command Line Interface) untuk sistem manajemen nilai siswa menggunakan JavaScript dengan pendekatan Object-Oriented Programming (OOP).
+Aplikasi CLI berbasis Node.js untuk mengelola data siswa dan nilai mereka.
 
-## Tujuan Pembelajaran
-- Memahami konsep OOP dalam JavaScript (Class, Object, Inheritance, Encapsulation)
-- Mengimplementasikan CRUD operations
-- Mengelola data menggunakan array dan object
-- Membuat interactive CLI application
-- Menerapkan error handling
+## Fitur Utama
 
-## Fitur yang Harus Diimplementasikan
+- Manajemen data siswa (tambah, lihat, cari, update, hapus)
+- Manajemen nilai siswa per mata pelajaran
+- Top 3 siswa terbaik berdasarkan rata-rata nilai
+- Statistik kelas lengkap (bonus feature)
+- Data tersimpan dalam file JSON
+- Interface CLI dengan warna dan validasi input
 
-### 1. Class Student
-Buat class `Student` dengan properti:
-- `id` (string/number) - ID unik siswa
-- `name` (string) - Nama siswa
-- `class` (string) - Kelas siswa (misal: "10A", "11B")
-- `grades` (object) - Object berisi nilai mata pelajaran
+## Prasyarat
 
-Method yang harus ada:
-- `addGrade(subject, score)` - Menambah nilai mata pelajaran
-- `getAverage()` - Menghitung rata-rata nilai
-- `getGradeStatus()` - Menentukan status (Lulus/Tidak Lulus)
-- `displayInfo()` - Menampilkan informasi siswa
+Sebelum menjalankan aplikasi, pastikan sudah terinstal:
 
-### 2. Class StudentManager
-Buat class `StudentManager` untuk mengelola data siswa:
+- Node.js (versi 14.x atau lebih baru)
+- npm (Node Package Manager)
 
-Method yang harus ada:
-- `addStudent(student)` - Menambah siswa baru
-- `removeStudent(id)` - Menghapus siswa berdasarkan ID
-- `findStudent(id)` - Mencari siswa berdasarkan ID
-- `updateStudent(id, data)` - Update data siswa
-- `getAllStudents()` - Mendapatkan semua data siswa
-- `getTopStudents(n)` - Mendapatkan n siswa dengan rata-rata tertinggi
-- `displayAllStudents()` - Menampilkan semua siswa
-
-### 3. CLI Interface
-Implementasikan menu interaktif dengan pilihan:
-1. Tambah Siswa Baru
-2. Lihat Semua Siswa
-3. Cari Siswa (by ID)
-4. Update Data Siswa
-5. Hapus Siswa
-6. Tambah Nilai Siswa
-7. Lihat Top 3 Siswa
-8. Keluar
-
-## Kriteria Penilaian
-
-### OOP Implementation (40%)
-- Penggunaan class dengan benar
-- Encapsulation (private/public properties)
-- Method yang sesuai dengan tanggung jawab class
-- Constructor yang tepat
-
-### Functionality (40%)
-- Semua fitur CRUD berfungsi dengan baik
-- Perhitungan rata-rata dan status benar
-- Pencarian dan sorting berfungsi
-- Data persistence (bonus jika menggunakan file)
-
-### Code Quality (20%)
-- Clean code dan readable
-- Error handling yang baik
-- Validasi input
-- Dokumentasi/komentar yang jelas
-
-## Ketentuan Teknis
-
-1. **Struktur Nilai:**
-   - Setiap siswa memiliki nilai untuk berbagai mata pelajaran
-   - Nilai harus dalam rentang 0-100
-   - Rata-rata >= 75 = Lulus, < 75 = Tidak Lulus
-
-2. **Validasi:**
-   - ID siswa harus unik
-   - Nama tidak boleh kosong
-   - Nilai harus berupa angka 0-100
-   - Input harus divalidasi sebelum diproses
-
-3. **Error Handling:**
-   - Tangani error saat siswa tidak ditemukan
-   - Tangani input yang tidak valid
-   - Berikan pesan error yang informatif
-
-## Contoh Output
+## Struktur Project
 
 ```
-=== SISTEM MANAJEMEN NILAI SISWA ===
+student-management-system/
+├── index.js                         
+├── src/
+│   ├── Student.js                
+│   └── StudentManager.js  
+├── students.json                 
+├── package.json                  
+└── README.md                
+```
+
+## Cara Menggunakan
+
+Jalankan aplikasi dengan perintah:
+```bash
+node index.js
+```
+
+### Menu Aplikasi
+
+```
+
 1. Tambah Siswa Baru
 2. Lihat Semua Siswa
 3. Cari Siswa
@@ -98,62 +49,63 @@ Implementasikan menu interaktif dengan pilihan:
 5. Hapus Siswa
 6. Tambah Nilai Siswa
 7. Lihat Top 3 Siswa
-8. Keluar
-Pilih menu (1-8): 2
+8. Statistik Kelas
+0. Keluar
 
-=== DAFTAR SISWA ===
-ID: S001
-Nama: Budi Santoso
-Kelas: 10A
-Mata Pelajaran:
-  - Matematika: 85
-  - Bahasa Indonesia: 90
-  - IPA: 88
-Rata-rata: 87.67
-Status: Lulus
-------------------------
 ```
 
-## Cara Mengerjakan
+### Panduan Singkat
 
-1. Clone repository ini
-2. Implementasikan class-class yang diperlukan di folder `src/`
-3. Implementasikan CLI di file `index.js`
-4. Test aplikasi Anda dengan menjalankan `node index.js`
-5. Pastikan semua fitur berfungsi dengan baik
+**Tambah Siswa:** Format ID harus S001, S002, dst (S + 3 digit angka)
 
-## Bonus Points
+**Tambah Nilai:** Nilai harus antara 0-100, sistem otomatis menghitung rata-rata
 
-- Implementasi data persistence menggunakan JSON file
-- Tambah fitur export laporan ke file
-- Implementasi filtering (misal: filter by class)
-- Tambah fitur statistik kelas
-- UI yang lebih menarik dengan colors (chalk/colors library)
+**Statistik Kelas:** Menampilkan total siswa, rata-rata kelas, tingkat kelulusan, dan daftar siswa
 
-## Submission
+## Contoh Penggunaan
 
-Pastikan repository Anda berisi:
-- Source code lengkap
-- README.md dengan cara menjalankan
-- Contoh data atau screenshot hasil running
-- Dokumentasi kode yang jelas
+```
+Masukkan ID Siswa: S001
+Masukkan Nama Siswa: Budi Santoso
+Masukkan Kelas: 10A
+```
 
-## Tips
+```
+Masukkan Mata Pelajaran: Matematika
+Masukkan Nilai: 85
+```
 
-- Mulai dengan membuat class Student terlebih dahulu
-- Test setiap method sebelum melanjutkan
-- Gunakan readline-sync atau inquirer untuk input CLI
-- Pisahkan logic dan UI untuk code yang lebih clean
-- Commit secara berkala dengan pesan yang jelas
+## Kriteria Penilaian
 
-## Resources
+- Rata-rata >= 75: Lulus
+- Rata-rata < 75: Tidak Lulus
 
-- [MDN - Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
-- [Node.js readline-sync](https://www.npmjs.com/package/readline-sync)
-- [JavaScript OOP Guide](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_programming)
+## Format Data
+
+Data disimpan dalam file `students.json` dengan format:
+
+```json
+[
+  {
+    "id": "S001",
+    "name": "Budi Santoso",
+    "class": "10A",
+    "grades": {
+      "Matematika": 85,
+      "Bahasa Indonesia": 90,
+      "Bahasa Inggris": 88
+    }
+  }
+]
+```
+
+## Validasi
+
+- Format ID siswa (S + 3 digit)
+- Range nilai (0-100)
+- Pencegahan duplikasi ID
+- Validasi input kosong
+- Konfirmasi sebelum penghapusan
 
 ---
-**Deadline:** [Tentukan deadline sesuai kebutuhan]
 
-**Happy Coding!**
-# t-challenge-4-rep

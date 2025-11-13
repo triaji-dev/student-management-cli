@@ -14,7 +14,7 @@
     "cli",
     "oop"
   ],
-  "author": "",
+  "author": "Tri Aji Prabandaru - WPH-REP-109",
   "license": "ISC",
   "dependencies": {
     "readline-sync": "^1.4.10",

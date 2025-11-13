@@ -1,227 +1,330 @@
-/**
- * Class StudentManager
- * Mengelola koleksi siswa dan operasi-operasi terkait
- * 
- * Implementasi class StudentManager dengan:
- * - Constructor untuk inisialisasi array students
- * - Method addStudent(student) untuk menambah siswa
- * - Method removeStudent(id) untuk menghapus siswa
- * - Method findStudent(id) untuk mencari siswa
- * - Method updateStudent(id, data) untuk update data siswa
- * - Method getAllStudents() untuk mendapatkan semua siswa
- * - Method getTopStudents(n) untuk mendapatkan top n siswa
- * - Method displayAllStudents() untuk menampilkan semua siswa
- * - BONUS: getStudentsByClass() dan getClassStatistics()
- */
-
-import colors from 'colors';
 import Student from './Student.js';
+import { Validator } from './../index.js';
 
-class StudentManager {
-  // Private field untuk encapsulation
+/**
+┌────────────────────────────────────┐
+│         StudentManager Class       │
+└────────────────────────────────────┘
+*/
+
+export default class StudentManager {
   #students;
-  
-  /**
-   * Constructor untuk inisialisasi StudentManager
-   */
+  #classNames;
+  #subjectNames;
+
   constructor() {
     this.#students = [];
+    this.#classNames = []; // Daftar kelas yang terdaftar
+    this.#subjectNames = []; // Daftar mapel yang terdaftar
   }
 
-  /**
-   * Menambah siswa baru ke dalam sistem
-   * @param {Student} student - Object Student yang akan ditambahkan
-   * @returns {boolean} true jika berhasil, false jika ID sudah ada atau validasi gagal
-   */
+  // --- SETTERS / LOADERS for DataService ---
+
+  setAllClassNames(classNames) {
+    this.#classNames = [...new Set(classNames)].sort();
+  }
+
+  setAllSubjectNames(subjectNames) {
+    this.#subjectNames = [...new Set(subjectNames)].sort();
+    // Sinkronkan daftar mapel ke setiap objek Student
+    this.#students.forEach(student =>
+      student.setAllSubjectNames(this.#subjectNames)
+    );
+  }
+
+  // --- STUDENT CRUD ---
+
   addStudent(student) {
-    // Validasi bahwa student adalah instance dari Student
     if (!(student instanceof Student)) {
-      return false;
+      throw new Error('Objek harus instance dari Student.');
     }
-    
-    // Validasi ID unik
     if (this.findStudent(student.id)) {
-      return false;
+      throw new Error(`ID ${student.id} sudah digunakan.`);
     }
-    
-    // Validasi nama tidak kosong
-    if (!student.name || student.name.trim() === '') {
-      return false;
+    if (!Validator.isValidName(student.name)) {
+      throw new Error('Nama siswa tidak boleh kosong.');
     }
-    
+
+    // Pastikan siswa baru disinkronkan dengan daftar mapel global
+    student.setAllSubjectNames(this.#subjectNames);
+
+    // Tambahkan kelas baru ke daftar kelas jika belum ada
+    this.addClassName(student.class);
+
     this.#students.push(student);
-    return true;
+    return {
+      success: true,
+      message: `Siswa ${student.name} berhasil ditambahkan.`,
+    };
   }
 
-  /**
-   * Menghapus siswa berdasarkan ID
-   * @param {string} id - ID siswa yang akan dihapus
-   * @returns {boolean} true jika berhasil, false jika tidak ditemukan
-   */
   removeStudent(id) {
     const index = this.#students.findIndex(student => student.id === id);
-    
+
     if (index === -1) {
-      return false;
+      throw new Error(`Siswa dengan ID ${id} tidak ditemukan.`);
     }
-    
+
     this.#students.splice(index, 1);
-    return true;
+    // Note: Tidak menghapus kelas/mapel dari daftar global meskipun siswanya hilang
+    return { success: true, message: `Siswa berhasil dihapus.` };
   }
 
-  /**
-   * Mencari siswa berdasarkan ID
-   * @param {string} id - ID siswa yang dicari
-   * @returns {Student|null} Object Student jika ditemukan, null jika tidak
-   */
   findStudent(id) {
-    const student = this.#students.find(student => student.id === id);
-    return student || null;
+    return this.#students.find(student => student.id === id) || null;
   }
 
-  /**
-   * Update data siswa
-   * @param {string} id - ID siswa yang akan diupdate
-   * @param {object} data - Data baru (name, class)
-   * @returns {boolean} true jika berhasil, false jika tidak ditemukan
-   * Hanya mengizinkan update properti name dan class, ID tidak boleh diubah
-   */
+  findStudentsByIdOrName(query) {
+    if (!Validator.isValidName(query)) return [];
+
+    const lowerQuery = query.toLowerCase();
+
+    // Prioritas 1: ID persis
+    const studentById = this.findStudent(query);
+    if (studentById) return [studentById];
+
+    // Prioritas 2: Pencocokan parsial nama atau ID yang mirip
+    return this.#students.filter(
+      student =>
+        student.name.toLowerCase().includes(lowerQuery) ||
+        student.id.toLowerCase().includes(lowerQuery)
+    );
+  }
+
   updateStudent(id, data) {
     const student = this.findStudent(id);
-    
+
     if (!student) {
-      return false;
+      throw new Error(`Siswa dengan ID ${id} tidak ditemukan.`);
     }
-    
-    // Hanya update name dan class, ID tidak boleh diubah
+
     if (data.name !== undefined) {
-      // Validasi nama tidak kosong
-      if (!data.name || data.name.trim() === '') {
-        return false;
+      if (!Validator.isValidName(data.name)) {
+        throw new Error('Nama tidak boleh kosong.');
       }
       student.name = data.name;
     }
-    
+
     if (data.class !== undefined) {
+      if (!Validator.isValidName(data.class)) {
+        throw new Error('Kelas tidak boleh kosong.');
+      }
       student.class = data.class;
+      // Tambahkan kelas baru ke daftar kelas jika belum ada
+      this.addClassName(data.class);
     }
-    
-    return true;
+
+    return { success: true, message: 'Data siswa berhasil diupdate.' };
   }
 
-  /**
-   * Mendapatkan semua siswa
-   * @returns {Array} Array berisi semua siswa
-   */
+  // --- CLASS MANAGEMENT ---
+
+  addClassName(className) {
+    const lowerCaseName = className.toLowerCase();
+    if (!this.#classNames.map(n => n.toLowerCase()).includes(lowerCaseName)) {
+      this.#classNames.push(className);
+      this.#classNames.sort();
+      return {
+        success: true,
+        message: `Kelas '${className}' berhasil ditambahkan.`,
+      };
+    }
+    return { success: false, message: `Kelas '${className}' sudah ada.` };
+  }
+
+  updateClassName(oldName, newName) {
+    if (!Validator.isValidName(newName)) {
+      throw new Error('Nama kelas baru tidak boleh kosong.');
+    }
+
+    const index = this.#classNames.findIndex(
+      n => n.toLowerCase() === oldName.toLowerCase()
+    );
+    if (index === -1) {
+      throw new Error(
+        `Kelas '${oldName}' tidak ditemukan dalam daftar kelas terdaftar.`
+      );
+    }
+
+    // Update di daftar kelas global
+    this.#classNames[index] = newName;
+    this.#classNames.sort();
+
+    // Update di semua siswa
+    let count = 0;
+    this.#students.forEach(student => {
+      if (student.class.toLowerCase() === oldName.toLowerCase()) {
+        student.class = newName;
+        count++;
+      }
+    });
+    return { success: true, count, message: 'Nama kelas berhasil diupdate.' };
+  }
+
+  getAllClassNames() {
+    return [...this.#classNames];
+  }
+
+  getStudentsByClass(className) {
+    return this.#students.filter(
+      student => student.class.toLowerCase() === className.toLowerCase()
+    );
+  }
+
+  // --- SUBJECT MANAGEMENT ---
+
+  addSubjectName(subjectName) {
+    const lowerCaseName = subjectName.toLowerCase();
+    if (!this.#subjectNames.map(n => n.toLowerCase()).includes(lowerCaseName)) {
+      this.#subjectNames.push(subjectName);
+      this.#subjectNames.sort();
+      // Sinkronkan ke semua siswa
+      this.setAllSubjectNames(this.#subjectNames);
+      return {
+        success: true,
+        message: `Mata pelajaran '${subjectName}' berhasil ditambahkan.`,
+      };
+    }
+    return {
+      success: false,
+      message: `Mata pelajaran '${subjectName}' sudah ada.`,
+    };
+  }
+
+  updateSubjectName(oldName, newName) {
+    if (!Validator.isValidName(newName)) {
+      throw new Error('Nama mapel baru tidak boleh kosong.');
+    }
+
+    const index = this.#subjectNames.findIndex(
+      n => n.toLowerCase() === oldName.toLowerCase()
+    );
+    if (index === -1) {
+      throw new Error(
+        `Mata pelajaran '${oldName}' tidak ditemukan dalam daftar mapel terdaftar.`
+      );
+    }
+
+    const newNameLower = newName.toLowerCase();
+    const isNewNameExists = this.#subjectNames.some(
+      (name, i) => i !== index && name.toLowerCase() === newNameLower
+    );
+    if (isNewNameExists) {
+      throw new Error(`Nama mapel '${newName}' sudah ada pada daftar global.`);
+    }
+
+    // Update di daftar mapel global
+    this.#subjectNames[index] = newName;
+    this.#subjectNames.sort();
+
+    // Sinkronkan ke semua siswa
+    this.setAllSubjectNames(this.#subjectNames);
+
+    // Update di data nilai masing-masing siswa
+    let count = 0;
+    this.#students.forEach(student => {
+      try {
+        if (student.renameSubject(oldName, newName)) {
+          count++;
+        }
+      } catch (e) {
+        // Abaikan error renameSubject level siswa
+      }
+    });
+
+    return {
+      success: true,
+      count,
+      message: 'Nama mata pelajaran berhasil diupdate.',
+    };
+  }
+
+  getAllSubjectNames() {
+    return [...this.#subjectNames];
+  }
+
   getAllStudents() {
     return [...this.#students];
   }
 
-  /**
-   * Mendapatkan top n siswa berdasarkan rata-rata nilai
-   * @param {number} n - Jumlah siswa yang ingin didapatkan
-   * @returns {Array} Array berisi top n siswa (sorted descending by average)
-   */
+  // --- STATISTICS ---
+
   getTopStudents(n = 3) {
-    // Sort siswa berdasarkan rata-rata (descending)
-    const sortedStudents = [...this.#students].sort((a, b) => {
+    // 1. Filter hanya siswa yang Lulus
+    const passedStudents = this.#students.filter(
+      student => student.getGradeStatus() === 'Lulus'
+    );
+
+    // 2. Urutkan berdasarkan rata-rata
+    const sortedStudents = [...passedStudents].sort((a, b) => {
       return b.getAverage() - a.getAverage();
     });
-    
-    // Ambil n teratas
+
+    // 3. Ambil N teratas
     return sortedStudents.slice(0, n);
   }
 
-  /**
-   * Menampilkan informasi semua siswa
-   */
-  displayAllStudents() {
-    if (this.#students.length === 0) {
-      console.log('\n' + '⚠ Belum ada data siswa dalam sistem.'.yellow.bold);
-      return;
+  getSchoolStatistics() {
+    const totalStudents = this.getStudentCount();
+    if (totalStudents === 0) {
+      return {
+        totalStudents: 0,
+        totalClasses: 0,
+        schoolAverage: 0,
+        passedStudents: 0,
+        failedStudents: 0,
+        passRate: 0,
+      };
     }
-    
-    console.log('\n' + '═'.repeat(60).cyan.bold);
-    console.log('                      DAFTAR SEMUA SISWA'.bold.cyan);
-    console.log('═'.repeat(60).cyan.bold);
-    
-    this.#students.forEach((student, index) => {
-      console.log(`\n[${ (index + 1) }]`.bold.magenta);
-      student.displayInfo();
-    });
-  }
 
-  /**
-   * Mendapatkan siswa berdasarkan kelas
-   * @param {string} className - Nama kelas
-   * @returns {Array} Array siswa dalam kelas tersebut
-   */
-  getStudentsByClass(className) {
-    return this.#students.filter(student => 
-      student.class.toLowerCase() === className.toLowerCase()
-    );
-  }
+    // Rata-rata setiap siswa sudah dihitung berdasarkan semua mapel terdaftar
+    const averages = this.#students.map(s => s.getAverage());
+    const totalAverage =
+      averages.reduce((sum, avg) => sum + avg, 0) / totalStudents;
+    const passedStudents = this.#students.filter(
+      s => s.getGradeStatus() === 'Lulus'
+    ).length;
+    const totalClasses = this.getAllClassNames().length;
 
-  /**
-   * Mendapatkan statistik kelas
-   * @param {string} className - Nama kelas
-   * @returns {Object|null} Object berisi statistik kelas atau null jika tidak ada siswa
-   */
-  getClassStatistics(className) {
-    const students = this.getStudentsByClass(className);
-    
-    if (students.length === 0) {
-      return null;
-    }
-    
-    const averages = students.map(s => s.getAverage());
-    const totalAverage = averages.reduce((sum, avg) => sum + avg, 0) / averages.length;
-    const passedStudents = students.filter(s => s.getGradeStatus() === "Lulus").length;
-    const failedStudents = students.length - passedStudents;
-    const highestAverage = Math.max(...averages);
-    const lowestAverage = Math.min(...averages);
-    
     return {
-      className: className,
-      totalStudents: students.length,
-      classAverage: totalAverage,
+      totalStudents: totalStudents,
+      totalClasses: totalClasses,
+      schoolAverage: totalAverage,
       passedStudents: passedStudents,
-      failedStudents: failedStudents,
-      passRate: (passedStudents / students.length * 100),
-      highestAverage: highestAverage,
-      lowestAverage: lowestAverage
+      failedStudents: totalStudents - passedStudents,
+      passRate: (passedStudents / totalStudents) * 100,
     };
   }
 
-  /**
-   * Mendapatkan jumlah total siswa
-   * @returns {number} Jumlah siswa
-   */
+  // --- UTILS ---
+
+  generateNextStudentId() {
+    let maxId = 0;
+    this.#students.forEach(s => {
+      if (Validator.isValidStudentId(s.id)) {
+        const idNum = parseInt(s.id.substring(1));
+        if (idNum > maxId) maxId = idNum;
+      }
+    });
+    return `S${(maxId + 1).toString().padStart(3, '0')}`;
+  }
+
   getStudentCount() {
     return this.#students.length;
   }
 
-  /**
-   * Mengkonversi semua students ke format JSON
-   * @returns {Array} Array of student objects
-   */
   toJSON() {
     return this.#students.map(student => student.toJSON());
   }
 
-  /**
-   * Memuat students dari array JSON
-   * @param {Array} data - Array of student objects
-   */
   fromJSON(data) {
     this.#students = [];
     if (Array.isArray(data)) {
       data.forEach(studentData => {
         const student = Student.fromJSON(studentData);
+        // Student's allSubjectNames will be set later by setAllSubjectNames
         this.#students.push(student);
       });
     }
   }
 }
-
-export default StudentManager;

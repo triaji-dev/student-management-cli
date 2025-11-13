@@ -1,28 +1,492 @@
-[
-  {
-    "id": "S001",
-    "name": "Pangeran Diponegoro",
-    "class": "10A",
-    "grades": {
-      "Bahasa Indonesia": 95,
-      "Matematika": 88,
-      "Bahasa Inggris": 85,
-      "Kimia": 92,
-      "Fisika": 90,
-      "Biologi": 89
+{
+  "students": [
+    {
+      "id": "S001",
+      "name": "Pangeran Diponegoro",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 85,
+        "Bahasa Inggris": 77,
+        "IPA": 25,
+        "IPS": 88,
+        "Matematika": 68
+      }
+    },
+    {
+      "id": "S002",
+      "name": "Kapten Tendean",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 78,
+        "Bahasa Inggris": 70,
+        "IPA": 82,
+        "IPS": 85,
+        "Matematika": 90
+      }
+    },
+    {
+      "id": "S003",
+      "name": "Pangeran Antasari",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 65,
+        "Bahasa Inggris": 80,
+        "IPA": 75,
+        "IPS": 60,
+        "Matematika": 78
+      }
+    },
+    {
+      "id": "S004",
+      "name": "Cut Nyak Dien",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 90,
+        "Bahasa Inggris": 85,
+        "IPA": 88,
+        "IPS": 79,
+        "Matematika": 70
+      }
+    },
+    {
+      "id": "S005",
+      "name": "Sutan Syahrir",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 68,
+        "Bahasa Inggris": 72,
+        "IPA": 75,
+        "IPS": 65,
+        "Matematika": 80
+      }
+    },
+    {
+      "id": "S006",
+      "name": "Mohammad Hatta",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 98,
+        "Bahasa Inggris": 92,
+        "IPA": 95,
+        "IPS": 91,
+        "Matematika": 96
+      }
+    },
+    {
+      "id": "S007",
+      "name": "Ki Hajar Dewantara",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 81,
+        "Bahasa Inggris": 76,
+        "IPA": 84,
+        "IPS": 70,
+        "Matematika": 79
+      }
+    },
+    {
+      "id": "S008",
+      "name": "Fatmawati",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 88,
+        "Bahasa Inggris": 65,
+        "IPA": 71,
+        "IPS": 78,
+        "Matematika": 83
+      }
+    },
+    {
+      "id": "S009",
+      "name": "Tjut Meutia",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 62,
+        "Bahasa Inggris": 88,
+        "IPA": 70,
+        "IPS": 81,
+        "Matematika": 69
+      }
+    },
+    {
+      "id": "S010",
+      "name": "Martha C. Tiahahu",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 75,
+        "Bahasa Inggris": 78,
+        "IPA": 72,
+        "IPS": 80,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S011",
+      "name": "Raden Ajeng Kartini",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 83,
+        "Bahasa Inggris": 90,
+        "IPA": 88,
+        "IPS": 85,
+        "Matematika": 91
+      }
+    },
+    {
+      "id": "S012",
+      "name": "Jenderal Sudirman",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 79,
+        "Bahasa Inggris": 70,
+        "IPA": 68,
+        "IPS": 72,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S013",
+      "name": "Bung Tomo",
+      "class": "10c",
+      "grades": {
+        "Bahasa Indonesia": 70,
+        "Bahasa Inggris": 75,
+        "IPA": 80,
+        "IPS": 72,
+        "Matematika": 65
+      }
+    },
+    {
+      "id": "S014",
+      "name": "Dewi Sartika",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 80,
+        "Bahasa Inggris": 82,
+        "IPA": 77,
+        "IPS": 40,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S015",
+      "name": "Imam Bonjol",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 65,
+        "Bahasa Inggris": 70,
+        "IPA": 72,
+        "IPS": 68,
+        "Matematika": 70
+      }
+    },
+    {
+      "id": "S016",
+      "name": "Teuku Umar",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 88,
+        "Bahasa Inggris": 91,
+        "IPA": 85,
+        "IPS": 90,
+        "Matematika": 82
+      }
+    },
+    {
+      "id": "S017",
+      "name": "Cipto Mangunkusumo",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 75,
+        "Bahasa Inggris": 77,
+        "IPA": 70,
+        "IPS": 72,
+        "Matematika": 78
+      }
+    },
+    {
+      "id": "S018",
+      "name": "H. Agus Salim",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 85,
+        "Bahasa Inggris": 80,
+        "IPA": 88,
+        "IPS": 79,
+        "Matematika": 81
+      }
+    },
+    {
+      "id": "S019",
+      "name": "Wahidin S.",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 68,
+        "Bahasa Inggris": 65,
+        "IPA": 70,
+        "IPS": 62,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S020",
+      "name": "Sultan Hasanuddin",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 90,
+        "Bahasa Inggris": 85,
+        "IPA": 92,
+        "IPS": 88,
+        "Matematika": 85
+      }
+    },
+    {
+      "id": "S021",
+      "name": "Pattimura",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 77,
+        "Bahasa Inggris": 75,
+        "IPA": 78,
+        "IPS": 70,
+        "Matematika": 72
+      }
+    },
+    {
+      "id": "S022",
+      "name": "Tjokroaminoto",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 80,
+        "Bahasa Inggris": 75,
+        "IPA": 68,
+        "IPS": 81,
+        "Matematika": 77
+      }
+    },
+    {
+      "id": "S023",
+      "name": "Yos Sudarso",
+      "class": "10d",
+      "grades": {
+        "Bahasa Indonesia": 72,
+        "Bahasa Inggris": 70,
+        "IPA": 65,
+        "IPS": 95,
+        "Matematika": 100
+      }
+    },
+    {
+      "id": "S024",
+      "name": "W. R. Supratman",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 88,
+        "Bahasa Inggris": 90,
+        "IPA": 85,
+        "IPS": 92,
+        "Matematika": 88
+      }
+    },
+    {
+      "id": "S025",
+      "name": "Tan Malaka",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 60,
+        "Bahasa Inggris": 70,
+        "IPA": 65,
+        "IPS": 62,
+        "Matematika": 70
+      }
+    },
+    {
+      "id": "S026",
+      "name": "Mohammad Yamin",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 75,
+        "Bahasa Inggris": 78,
+        "IPA": 72,
+        "IPS": 80,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S027",
+      "name": "Supomo",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 83,
+        "Bahasa Inggris": 90,
+        "IPA": 88,
+        "IPS": 85,
+        "Matematika": 91
+      }
+    },
+    {
+      "id": "S028",
+      "name": "Iskandar Muda",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 79,
+        "Bahasa Inggris": 70,
+        "IPA": 68,
+        "IPS": 72,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S029",
+      "name": "Frans Kaisiepo",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 70,
+        "Bahasa Inggris": 75,
+        "IPA": 80,
+        "IPS": 72,
+        "Matematika": 65
+      }
+    },
+    {
+      "id": "S030",
+      "name": "Silas Papare",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 80,
+        "Bahasa Inggris": 82,
+        "IPA": 77,
+        "IPS": 85,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S031",
+      "name": "Sultan Agung H.",
+      "class": "10a",
+      "grades": {
+        "Bahasa Indonesia": 65,
+        "Bahasa Inggris": 70,
+        "IPA": 72,
+        "IPS": 68,
+        "Matematika": 70
+      }
+    },
+    {
+      "id": "S032",
+      "name": "Ali Sadikin",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 88,
+        "Bahasa Inggris": 91,
+        "IPA": 85,
+        "IPS": 90,
+        "Matematika": 82
+      }
+    },
+    {
+      "id": "S033",
+      "name": "Sultan Syarif",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 75,
+        "Bahasa Inggris": 77,
+        "IPA": 70,
+        "IPS": 72,
+        "Matematika": 78
+      }
+    },
+    {
+      "id": "S034",
+      "name": "H.R. Rasuna Said",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 85,
+        "Bahasa Inggris": 80,
+        "IPA": 88,
+        "IPS": 79,
+        "Matematika": 81
+      }
+    },
+    {
+      "id": "S035",
+      "name": "Otto Iskandardinata",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 68,
+        "Bahasa Inggris": 65,
+        "IPA": 70,
+        "IPS": 62,
+        "Matematika": 75
+      }
+    },
+    {
+      "id": "S036",
+      "name": "Adam Malik",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 90,
+        "Bahasa Inggris": 85,
+        "IPA": 92,
+        "IPS": 88,
+        "Matematika": 85
+      }
+    },
+    {
+      "id": "S037",
+      "name": "Soepomo",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 77,
+        "Bahasa Inggris": 75,
+        "IPA": 78,
+        "IPS": 70,
+        "Matematika": 72
+      }
+    },
+    {
+      "id": "S038",
+      "name": "A.H. Nasution",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 80,
+        "Bahasa Inggris": 75,
+        "IPA": 68,
+        "IPS": 81,
+        "Matematika": 77
+      }
+    },
+    {
+      "id": "S039",
+      "name": "Achmad Yani",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 72,
+        "Bahasa Inggris": 70,
+        "IPA": 65,
+        "IPS": 75,
+        "Matematika": 80
+      }
+    },
+    {
+      "id": "S040",
+      "name": "Slamet Riyadi",
+      "class": "10b",
+      "grades": {
+        "Bahasa Indonesia": 88,
+        "Bahasa Inggris": 90,
+        "IPA": 85,
+        "IPS": 92,
+        "Matematika": 88
+      }
     }
-  },{
-    "id": "S002",
-    "name": "Cut Nyak Dien",
-    
-    "class": "10A",
-    "grades": {
-      "Bahasa Indonesia": 58,
-      "Matematika": 36,
-      "Bahasa Inggris": 85,
-      "Kimia": 88,    
-      "Fisika": 69,
-      "Biologi": 35
-    }
-  }
-]
+  ],
+  "classNames": ["10a", "10b", "10c", "10d"],
+  "subjectNames": [
+    "Bahasa Indonesia",
+    "Bahasa Inggris",
+    "IPA",
+    "IPS",
+    "Matematika"
+  ]
+}
